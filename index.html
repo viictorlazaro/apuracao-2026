@@ -218,7 +218,6 @@ footer a{color:inherit}
   <div class="status">
     <span><span class="dot" id="dot"></span><span id="st-text">Conectando ao TSE…</span></span>
     <span id="st-time"></span>
-    <span id="st-next"></span>
     <button class="btn" id="refresh" type="button">Atualizar agora</button>
     <button class="btn" id="tv" type="button" title="Esconde a tabela e amplia o placar e o mapa">Modo TV</button>
   </div>
@@ -315,7 +314,7 @@ footer a{color:inherit}
 </section>
 
 <footer>
-  Fonte: arquivos oficiais de totalização do <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noopener">Tribunal Superior Eleitoral</a> (eleição 6258), lidos direto pelo seu navegador a cada 30 segundos. Percentuais dos candidatos são sobre votos válidos, como o TSE divulga. Horários no fuso de Brasília. Esta página não estima nem projeta resultado: mostra apenas o que o TSE já totalizou.
+  Fonte: arquivos oficiais de totalização do <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noopener">Tribunal Superior Eleitoral</a> (eleição 6258), lidos direto pelo seu navegador a cada 10 segundos. Percentuais dos candidatos são sobre votos válidos, como o TSE divulga. Horários no fuso de Brasília. Esta página não estima nem projeta resultado: mostra apenas o que o TSE já totalizou.
 </footer>
 </div>
 
@@ -327,7 +326,7 @@ footer a{color:inherit}
   // label anchor per state in the SVG's 1000x1009 space (pole of inaccessibility)
   const CENT={"ac":[119,397],"al":[951,401],"am":[214,246],"ap":[569,98],"ba":[817,458],"ce":[886,270],"es":[837,643],"go":[603,564],"ma":[737,261],"mg":[744,616],"ms":[482,652],"mt":[465,476],"pa":[531,262],"pb":[970,332],"pe":[923,359],"pi":[799,343],"pr":[556,771],"rj":[780,721],"rn":[959,295],"ro":[274,408],"rr":[313,77],"rs":[519,899],"sc":[601,842],"se":[929,418],"sp":[642,711],"to":[648,405],"df":[661,541]};
   const SMALL={al:1,se:1,rn:1,pb:1,df:1,es:1,rj:1,pe:1};
-  const INTERVAL=30;
+  const INTERVAL=10;
   const $=id=>document.getElementById(id);
   const fmtI=n=>n==null||isNaN(n)?'—':Math.round(n).toLocaleString('pt-BR');
   const fmtP=n=>n==null||isNaN(n)?'—':n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';
@@ -554,7 +553,7 @@ footer a{color:inherit}
       }
       renderNational();renderPanel();renderChart();
       if(br.pst>0){hideAlert();setStatus('ok','Ao vivo · '+fmtP(br.pst)+' das seções');}
-      else{setStatus('ok','Conectado ao TSE · aguardando as primeiras urnas');showAlert('<b>A apuração ainda não começou.</b> O TSE libera os primeiros números após as 17h (horário de Brasília), quando as urnas fecham em todo o país. Esta página atualiza sozinha a cada minuto; pode deixar aberta.');}
+      else{setStatus('ok','Conectado ao TSE · aguardando as primeiras urnas');showAlert('<b>A apuração ainda não começou.</b> O TSE libera os primeiros números após as 17h (horário de Brasília), quando as urnas fecham em todo o país. Esta página atualiza sozinha a cada 10 segundos; pode deixar aberta.');}
       // states, in parallel but limited
       const ufs=Object.keys(UFS);
       const results=await Promise.allSettled(ufs.map(u=>get(u)));
@@ -563,7 +562,7 @@ footer a{color:inherit}
     }catch(e){
       state.err=e;
       setStatus('err','Sem resposta do TSE');
-      showAlert('<b>Não foi possível ler os arquivos do TSE agora</b> ('+(e&&e.message?e.message:'erro de rede')+'). Os números mostrados são da última leitura bem-sucedida. A página tenta de novo em 1 minuto; você também pode acompanhar direto em <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noopener">resultados.tse.jus.br</a>.');
+      showAlert('<b>Não foi possível ler os arquivos do TSE agora</b> ('+(e&&e.message?e.message:'erro de rede')+'). Os números mostrados são da última leitura bem-sucedida. A página tenta de novo em instantes; você também pode acompanhar direto em <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noopener">resultados.tse.jus.br</a>.');
     }
     state.last=Date.now();state.next=INTERVAL;busy=false;
   }
@@ -589,7 +588,7 @@ footer a{color:inherit}
 
   buildTiles();renderPanel();renderTable();renderChart();
   refresh();
-  setInterval(()=>{if(busy)return;state.next--;$('st-next').textContent='próxima em '+Math.max(0,state.next)+'s';if(state.next<=0)refresh();},1000);
+  setInterval(()=>{if(busy)return;state.next--;if(state.next<=0)refresh();},1000);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden&&state.last&&Date.now()-state.last>INTERVAL*1000)refresh();});
 })();
 </script>
