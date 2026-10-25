@@ -151,18 +151,65 @@ button{font:inherit;color:inherit}
 
 /* Celular / tela estreita: libera rolagem e empilha */
 @media (max-width:900px),(max-aspect-ratio:1/1){
-  :root{--u:.9vw}
-  body{overflow:auto;font-size:15px}
-  .screen{height:auto;grid-template-rows:none}
-  .score{grid-template-columns:1fr}
+  :root{--u:.8vh}
+  html,body{height:auto;min-height:100%}
+  body{overflow-x:hidden;overflow-y:auto;font-size:15px;line-height:1.4;padding-block:12px 24px}
+  .screen{height:auto;max-width:none;grid-template-rows:none;gap:14px}
+  .top{flex-wrap:wrap;align-items:flex-start}
+  .top h1{font-size:30px}
+  .top h1 small{display:block;margin:4px 0 0;font-size:11px}
+  .status{flex-wrap:wrap;gap:8px 14px;font-size:13px;white-space:normal;width:100%}
+  .btn{font-size:13px}
+  #fs{display:none}
+  .score{grid-template-columns:1fr;gap:10px}
+  .cand{padding:12px 14px;column-gap:12px;border-radius:10px}
+  .badge{font-size:40px;padding:6px 10px;border-radius:8px}
+  .cand .name{font-size:19px}
+  .cand .party{font-size:12px}
+  .cand .pct{font-size:52px}
+  .cand .votes{font-size:14px}
   .cand.right{direction:ltr;text-align:left}
   .cand.right::before{right:auto;left:0}
-  .main{grid-template-columns:1fr}
-  .map{height:auto}
-  .map svg{width:100%;height:auto}
+  .cand.right .name{flex-direction:row-reverse;justify-content:flex-end}
+  .cand.right .big{flex-direction:row-reverse;justify-content:flex-end}
+  .center{order:3;padding:0}
+  .center .lbl{font-size:13px}
+  .race{height:26px}
+  .center .diff{font-size:28px}
+  .center .diff small{font-size:12px}
+  .main{grid-template-columns:1fr;gap:14px}
+  .map-box{display:block}
+  .map{height:auto;display:block}
+  .map svg{width:100%;height:auto;max-width:100%}
+  .map-foot{margin-top:8px;font-size:12px}
+  .zz-btn{font-size:13px;padding:4px 10px}
+  .zz-btn .uf{font-size:18px}
+  .side{display:block}
+  .panel{padding:14px 16px;margin-bottom:12px;overflow:visible}
+  .panel h3{font-size:30px}
+  .panel .auto{font-size:10px}
+  .panel .sub{font-size:13px}
+  .prow .n{font-size:17px;min-width:44px}
+  .prow .n small{font-size:11px}
+  .prow .b{height:14px}
+  .prow .p{font-size:28px}
+  .prow .p small{font-size:11px}
+  .extra{font-size:13px}
+  .extra .eh{font-size:10px}
+  .extra .er b{font-size:17px;min-width:34px}
+  .extra .er i{width:11px;height:11px}
+  .pstats{font-size:13px;grid-template-columns:1fr 1fr;gap:4px 14px}
   .stats{grid-template-columns:1fr 1fr}
-  .alert{position:static;transform:none;max-width:none}
-  body{overflow-x:hidden}
+  .stat{padding:10px 12px}
+  .stat .k{font-size:10px}
+  .stat .v{font-size:26px}
+  .stat .s{font-size:11px}
+  .prog{grid-template-columns:1fr auto;gap:6px 14px}
+  .prog .track{height:12px}
+  .prog .lbl{font-size:12px}
+  .prog .big{font-size:36px}
+  .tip{display:none}
+  .alert{position:static;transform:none;max-width:none;font-size:13px;margin-top:12px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
