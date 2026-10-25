@@ -178,8 +178,8 @@ tbody tr{cursor:pointer}
 tbody tr:hover td{background:var(--soft)}
 .mini{display:inline-flex;width:90px;height:8px;border-radius:3px;overflow:hidden;background:var(--soft);vertical-align:middle;margin-left:8px}
 .mini i{display:block;height:100%}
-.mini .a{background:var(--c13)}
-.mini .b{background:var(--c22);margin-left:1px}
+.mini .b{background:var(--c22)}
+.mini .a{background:var(--c13);margin-left:1px}
 .lead13{color:var(--c13);font-weight:600}
 .lead22{color:var(--c22);font-weight:600}
 .pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:4px;background:var(--soft);color:var(--muted)}
@@ -226,23 +226,23 @@ footer a{color:inherit}
 <div class="alert" id="alert" hidden></div>
 
 <div class="score" id="score">
-  <div class="cand" id="cand13" style="--cc:var(--c13)">
-    <span class="lead-tag" id="lt13" hidden>Na frente</span>
-    <div class="who"><span class="badge">13</span><div><div class="name">Lula</div><div class="party">PT · Luiz Inácio Lula da Silva</div></div></div>
-    <div class="pct num" id="p13">—<small>%</small></div>
-    <div class="votes num" id="v13">— votos</div>
-  </div>
-  <div class="vs">×</div>
-  <div class="cand right" id="cand22" style="--cc:var(--c22)">
+  <div class="cand" id="cand22" style="--cc:var(--c22)">
     <span class="lead-tag" id="lt22" hidden>Na frente</span>
     <div class="who"><span class="badge">22</span><div><div class="name">Flávio Bolsonaro</div><div class="party">PL · Flávio Nantes Bolsonaro</div></div></div>
     <div class="pct num" id="p22">—<small>%</small></div>
     <div class="votes num" id="v22">— votos</div>
   </div>
+  <div class="vs">×</div>
+  <div class="cand right" id="cand13" style="--cc:var(--c13)">
+    <span class="lead-tag" id="lt13" hidden>Na frente</span>
+    <div class="who"><span class="badge">13</span><div><div class="name">Lula</div><div class="party">PT · Luiz Inácio Lula da Silva</div></div></div>
+    <div class="pct num" id="p13">—<small>%</small></div>
+    <div class="votes num" id="v13">— votos</div>
+  </div>
 </div>
 
 <div class="race">
-  <div class="bar"><div class="seg s13" id="seg13" style="width:50%"></div><div class="seg s22" id="seg22" style="width:50%"></div><div class="mid" title="50%"></div></div>
+  <div class="bar"><div class="seg s22" id="seg22" style="width:50%"></div><div class="seg s13" id="seg13" style="width:50%"></div><div class="mid" title="50%"></div></div>
   <div class="cap"><span>Diferença: <b class="num" id="diff">—</b></span><span>Votos válidos apurados: <b class="num" id="vv">—</b></span><span>Percentuais sobre votos válidos (sem brancos e nulos)</span></div>
 </div>
 
@@ -272,8 +272,8 @@ footer a{color:inherit}
       </div>
       <button type="button" class="zz-btn" id="zz-btn" data-uf="zz"><span class="uf">ZZ</span><span>Exterior</span><span class="tp num" id="zz-tp">—</span></button>
       <div class="legend">
-        <span><i class="sw" style="background:var(--c13)"></i>Lula na frente</span>
         <span><i class="sw" style="background:var(--c22)"></i>Flávio na frente</span>
+        <span><i class="sw" style="background:var(--c13)"></i>Lula na frente</span>
         <span><i class="sw" style="background:var(--soft)"></i>Sem urnas apuradas</span>
         <span>Cor mais forte = vantagem maior</span>
       </div>
@@ -294,10 +294,10 @@ footer a{color:inherit}
       <thead><tr>
         <th data-k="nome" class="asc on">Estado</th>
         <th data-k="pst">Apurado</th>
-        <th data-k="p13">Lula %</th>
-        <th data-k="v13">Lula votos</th>
         <th data-k="p22">Flávio %</th>
         <th data-k="v22">Flávio votos</th>
+        <th data-k="p13">Lula %</th>
+        <th data-k="v13">Lula votos</th>
         <th data-k="diff">Diferença</th>
         <th data-k="vv">Válidos</th>
         <th data-k="pa">Abstenção</th>
@@ -423,8 +423,8 @@ footer a{color:inherit}
     const r=state.ufs[uf],tip=$('tip');
     const st=r&&r.pst>0,L=lead(r);
     tip.innerHTML='<h4>'+UFS[uf]+'</h4>'+
-      '<div class="r"><span><i style="background:var(--c13)"></i>Lula</span><b class="num">'+(st?fmtP(r.p13):'—')+'</b></div>'+
       '<div class="r"><span><i style="background:var(--c22)"></i>Flávio Bolsonaro</span><b class="num">'+(st?fmtP(r.p22):'—')+'</b></div>'+
+      '<div class="r"><span><i style="background:var(--c13)"></i>Lula</span><b class="num">'+(st?fmtP(r.p13):'—')+'</b></div>'+
       '<div class="m">'+(r?fmtP(r.pst)+' das seções · '+fmtI(r.vv)+' válidos':'sem dados')+(L&&L!=='tie'?' · '+(L==='13'?'Lula':'Flávio')+' +'+Math.abs(r.p13-r.p22).toLocaleString('pt-BR',{maximumFractionDigits:2})+' p.p.':'')+'</div>';
     tip.hidden=false;moveTip(e);
   }
@@ -470,7 +470,7 @@ footer a{color:inherit}
     const started=r.pst>0;
     const row=(n,nm,p,v,cc)=>'<div class="prow" style="--cc:'+cc+'"><div class="n num">'+n+'<small>'+nm+'</small></div><div class="b"><i style="width:'+(started&&!isNaN(p)?p:0)+'%"></i></div><div class="p num">'+(started?p.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%':'—')+'<small>'+fmtI(started?v:NaN)+' votos</small></div></div>';
     const L=lead(r);
-    const order=L==='22'?[['22','Flávio Bolsonaro',r.p22,r.v22,'var(--c22)'],['13','Lula',r.p13,r.v13,'var(--c13)']]:[['13','Lula',r.p13,r.v13,'var(--c13)'],['22','Flávio Bolsonaro',r.p22,r.v22,'var(--c22)']];
+    const order=L==='13'?[['13','Lula',r.p13,r.v13,'var(--c13)'],['22','Flávio Bolsonaro',r.p22,r.v22,'var(--c22)']]:[['22','Flávio Bolsonaro',r.p22,r.v22,'var(--c22)'],['13','Lula',r.p13,r.v13,'var(--c13)']];
     $('pn-rows').innerHTML=order.map(a=>row(...a)).join('');
     $('pn-stats').innerHTML=
       '<div>Seções apuradas <b class="num">'+fmtP(r.pst)+'</b></div>'+
@@ -493,16 +493,16 @@ footer a{color:inherit}
     $('tbody').innerHTML=data.map(d=>{
       const r=d.r,st=r&&r.pst>0,L=lead(r);
       const t=st?(r.p13+r.p22||100):0;
-      const mini=st?'<span class="mini" aria-hidden="true"><i class="a" style="width:'+(r.p13/t*100)+'%"></i><i class="b" style="width:'+(r.p22/t*100)+'%"></i></span>':'';
+      const mini=st?'<span class="mini" aria-hidden="true"><i class="b" style="width:'+(r.p22/t*100)+'%"></i><i class="a" style="width:'+(r.p13/t*100)+'%"></i></span>':'';
       const diff=st?((L==='13'?'<span class="lead13">Lula +':L==='22'?'<span class="lead22">Flávio +':'<span>')+Math.abs(r.p13-r.p22).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p.</span>'):'—';
       const pill=r?('<span class="pill'+(r.pst>=100?' done':'')+'">'+fmtP(r.pst)+'</span>'):'<span class="pill">…</span>';
       return '<tr data-uf="'+d.uf+'" class="'+(state.sel===d.uf?'sel':'')+'"><td>'+d.nome+'</td><td>'+pill+'</td>'+
-        '<td class="num c13">'+(st?fmtP(r.p13):'—')+'</td><td class="num">'+(st?fmtI(r.v13):'—')+'</td>'+
         '<td class="num c22">'+(st?fmtP(r.p22):'—')+'</td><td class="num">'+(st?fmtI(r.v22):'—')+'</td>'+
+        '<td class="num c13">'+(st?fmtP(r.p13):'—')+'</td><td class="num">'+(st?fmtI(r.v13):'—')+'</td>'+
         '<td class="num">'+diff+mini+'</td><td class="num">'+(r?fmtI(r.vv):'—')+'</td><td class="num">'+(r?fmtP(r.pa):'—')+'</td></tr>';
     }).join('');
     const b=state.br;
-    $('tfoot').innerHTML=b?'<tr><td>Brasil</td><td>'+fmtP(b.pst)+'</td><td class="num c13">'+(b.pst>0?fmtP(b.p13):'—')+'</td><td class="num">'+(b.pst>0?fmtI(b.v13):'—')+'</td><td class="num c22">'+(b.pst>0?fmtP(b.p22):'—')+'</td><td class="num">'+(b.pst>0?fmtI(b.v22):'—')+'</td><td class="num">'+(b.pst>0?Math.abs(b.p13-b.p22).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p.':'—')+'</td><td class="num">'+fmtI(b.vv)+'</td><td class="num">'+fmtP(b.pa)+'</td></tr>':'';
+    $('tfoot').innerHTML=b?'<tr><td>Brasil</td><td>'+fmtP(b.pst)+'</td><td class="num c22">'+(b.pst>0?fmtP(b.p22):'—')+'</td><td class="num">'+(b.pst>0?fmtI(b.v22):'—')+'</td><td class="num c13">'+(b.pst>0?fmtP(b.p13):'—')+'</td><td class="num">'+(b.pst>0?fmtI(b.v13):'—')+'</td><td class="num">'+(b.pst>0?Math.abs(b.p13-b.p22).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p.':'—')+'</td><td class="num">'+fmtI(b.vv)+'</td><td class="num">'+fmtP(b.pa)+'</td></tr>':'';
     $('tbody').querySelectorAll('tr').forEach(tr=>tr.addEventListener('click',()=>select(tr.dataset.uf)));
   }
 
@@ -528,7 +528,7 @@ footer a{color:inherit}
       '<circle cx="'+xs(last)+'" cy="'+ys(last.p22)+'" r="4.5" fill="var(--c22)" stroke="var(--surface)" stroke-width="2"/>'+
       '<text x="'+Math.min(xs(last)+8,W-60)+'" y="'+(ys(last.p13)+4)+'" font-size="12" font-weight="600" fill="var(--fg)">Lula</text>'+
       '<text x="'+Math.min(xs(last)+8,W-60)+'" y="'+(ys(last.p22)+4)+'" font-size="12" font-weight="600" fill="var(--fg)">Flávio</text>'+
-      '</svg><div class="legend" style="max-width:none"><span><i class="sw" style="background:var(--c13)"></i>Lula (13)</span><span><i class="sw" style="background:var(--c22)"></i>Flávio Bolsonaro (22)</span><span>'+h.length+' leituras · última às '+last.hg+'</span></div>';
+      '</svg><div class="legend" style="max-width:none"><span><i class="sw" style="background:var(--c22)"></i>Flávio Bolsonaro (22)</span><span><i class="sw" style="background:var(--c13)"></i>Lula (13)</span><span>'+h.length+' leituras · última às '+last.hg+'</span></div>';
   }
 
   function select(uf){state.sel=uf;renderTiles();renderPanel();renderTable();$('panel').scrollIntoView({behavior:'smooth',block:'nearest'});}
