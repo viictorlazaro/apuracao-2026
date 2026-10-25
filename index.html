@@ -113,8 +113,9 @@ h2{font-family:var(--display);font-weight:800;font-size:28px;text-transform:uppe
 #states path:hover{filter:brightness(1.08) saturate(1.1)}
 #states path.l13{fill:color-mix(in srgb,var(--c13) var(--int),var(--surface))}
 #states path.l22{fill:color-mix(in srgb,var(--c22) var(--int),var(--surface))}
-#states path.sel{stroke:var(--fg);stroke-width:3.5}
-#states path:focus-visible{outline:none;stroke:var(--fg);stroke-width:4}
+#states path.sel{stroke:var(--fg);stroke-width:3.5;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+#states path:focus,#states path:focus-visible,.zz-btn:focus{outline:none!important}
+#states path:focus-visible{stroke:var(--fg);stroke-width:4}
 #labels text{font-family:var(--display);font-weight:800;font-size:22px;fill:var(--fg);pointer-events:none;text-anchor:middle;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 #labels text.pct{font-family:var(--mono);font-weight:500;font-size:15px}
 #labels text.light{fill:#fff;stroke:rgba(0,0,0,.35)}
